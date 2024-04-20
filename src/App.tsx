@@ -7,7 +7,7 @@ function App() {
       <>
         <div className="App">
           <header className="App-header">
-            <img src={bomb} className="App-logo" alt="logo"/>
+            <img src={bomb} className="App-logo" alt="bomb"/>
             <p>
               Minesweeper is loading...
             </p>
