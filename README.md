@@ -24,3 +24,7 @@ Sources for all project tasks (5 stages) with tests and configurations.
 
 19.04.24 Project started, setup of build, test and github workflow. Stage 1 completed. 
 Show an animated loading screen while the game is being initialized, using a google font.
+
+20.05.24 Stage 2 completed. Implement the game board with React components.
+
+21.05.24 Stage 3 completed. Implement the cell click events and the rendering of revealed and flagged cells.

@@ -1,19 +1,14 @@
 import './App.css'
-import bomb from './assets/bomb.svg'
+import {Minesweeper} from "@/components/Minesweeper.tsx";
 
 function App() {
 
   return (
-      <>
-        <div className="App">
-          <header className="App-header">
-            <img src={bomb} className="App-logo" alt="bomb"/>
-            <p>
-              Minesweeper is loading...
-            </p>
-          </header>
+      <div className="app">
+        <div className="game-container">
+          <Minesweeper/>
         </div>
-      </>
+      </div>
   )
 }
 

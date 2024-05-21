@@ -1,0 +1,27 @@
+.mini-logo {
+  height: 20px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.reset {
+  background-color: transparent;
+  font-size: x-large;
+  padding-inline: 30px;
+}
+
+.mines-counter {
+  color: white;
+  font-size: x-large;
+}
+
+.timer {
+  font-size: x-large;
+  color: white;
+}
+
+.control-panel {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
