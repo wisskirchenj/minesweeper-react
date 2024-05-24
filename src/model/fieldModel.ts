@@ -6,7 +6,6 @@ export interface Position {
 }
 
 export interface FieldModel {
-  mines: Position[];
   cells: CellModel[][];
 }
 
@@ -26,7 +25,6 @@ export const MINE_COUNT = 10;
 export const initializeMineField = (): FieldModel => {
   const createField = () => {
     const field: FieldModel = {
-      mines: [],
       cells: []
     };
     for (let row = 0; row < ROWS; row++) {
@@ -46,14 +44,7 @@ export const initializeMineField = (): FieldModel => {
   }
 
   const fillMinesIntoField = () => {
-    field.mines = minePositions.map(mine => {
-      const position = {
-        row: Math.floor(mine / COLS),
-        col: mine % COLS
-      }
-      field.cells[position.row][position.col].mine = true;
-      return position;
-    });
+    minePositions.forEach(mine => field.cells[Math.floor(mine / COLS)][mine % COLS].mine = true);
   }
 
   const calculateNeighborMines = () => {

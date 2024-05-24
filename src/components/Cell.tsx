@@ -31,8 +31,6 @@ export const Cell = ({cellModel, clickHandler}: Readonly<CellProps>) => {
 
   return (
       <div
-        data-row={cellModel.row}
-        data-col={cellModel.col}
         className={`cell ${dynamicClass()}`}
         onClick={handleClick} onContextMenu={handleRightClick}>
         {cellModel.revealed && (cellModel.mine

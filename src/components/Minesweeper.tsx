@@ -3,21 +3,27 @@ import {ControlPanel} from "@/components/ControlPanel.tsx";
 import {Field} from "@/components/Field.tsx";
 import bomb from '@/assets/bomb.svg'
 import {useState} from "react";
-import {MINE_COUNT} from "@/model/fieldModel.ts";
+import {FieldModel, initializeMineField, MINE_COUNT} from "@/model/fieldModel.ts";
 
-export type TimerState = 'initial' | 'stopped' | 'running';
+export type GameState = 'initial' | 'won' | 'running' | 'lost';
 
 export const Minesweeper = () =>{
-  const [timerState, setTimerState] = useState<TimerState>('initial')
+  const [field, setField] = useState<FieldModel>(initializeMineField());
+  const [gameState, setGameState] = useState<GameState>('initial')
   const [minesToFlag, setMinesToFlag] = useState(MINE_COUNT);
 
-  const toggleTimerState = () => {
-    // needs prev state retrieval, since it may be changed twice in one render cycle
-    setTimerState(timerState => timerState === 'running' ? 'stopped' : 'running');
+  const changeGameState = (newState: GameState) => {
+    newState === 'initial' && resetGameState()
+    setGameState(newState);
   }
 
   const changeMinesToFlag = (change: number) => {
     setMinesToFlag(minesToFlag + change);
+  }
+
+  const resetGameState = () => {
+    setField(initializeMineField());
+    setMinesToFlag(MINE_COUNT);
   }
 
   return (
@@ -26,9 +32,10 @@ export const Minesweeper = () =>{
         <h2>Minesweeper&nbsp;&nbsp;</h2>
         <img src={bomb} className="Minesweeper-logo" alt="bomb"/>
       </header>
-      <ControlPanel timerState={timerState} minesToFlag={minesToFlag}/>
+      <ControlPanel gameState={gameState} minesToFlag={minesToFlag} changeGameState={changeGameState}/>
       <Field
-          timerState={timerState} toggleTimer={toggleTimerState}
+          field={field} setField={setField}
+          gameState={gameState} changeGameState={changeGameState}
           minesToFlag={minesToFlag} changeFlagged={changeMinesToFlag}
       />
     </div>

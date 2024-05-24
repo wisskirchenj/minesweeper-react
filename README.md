@@ -12,7 +12,7 @@ The game is a single-player puzzle game in which the player has to clear a minef
 - React 18
 - TypeScript 5.4
 - Vite 5.2
-- Vitest 1.5
+- Vitest 1.6
 
 ## Repository Contents
 
@@ -20,7 +20,7 @@ Sources for all project tasks (5 stages) with tests and configurations.
 
 ## Project progress
 
-[//]: # (Project was completed on 29.10.23)
+Project was completed on 24.05.24
 
 19.04.24 Project started, setup of build, test and github workflow. Stage 1 completed. 
 Show an animated loading screen while the game is being initialized, using a google font.
@@ -31,4 +31,6 @@ Show an animated loading screen while the game is being initialized, using a goo
 
 24.05.24 Stage 4 completed. Implement the full game logic using useEffect for Timer and useState for
 FieldModel and other properties.
+
+24.05.24 Final Stage 5 completed. Implement reset functionality and better game state handling.
 

@@ -10,6 +10,10 @@
   padding-inline: 30px;
 }
 
+.reset:hover {
+  cursor: pointer;
+}
+
 .mines-counter {
   color: white;
   font-size: x-large;
