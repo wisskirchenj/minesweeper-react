@@ -7,7 +7,7 @@ The game is a single-player puzzle game in which the player has to clear a minef
 
 ## Technology / External Libraries
 
-- Node 21
+- Node 22
 - pnpm 9
 - React 18
 - TypeScript 5.4
@@ -28,3 +28,7 @@ Show an animated loading screen while the game is being initialized, using a goo
 20.05.24 Stage 2 completed. Implement the game board with React components.
 
 21.05.24 Stage 3 completed. Implement the cell click events and the rendering of revealed and flagged cells.
+
+24.05.24 Stage 4 completed. Implement the full game logic using useEffect for Timer and useState for
+FieldModel and other properties.
+

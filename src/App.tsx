@@ -1,7 +1,7 @@
 import './App.css'
 import {Minesweeper} from "@/components/Minesweeper.tsx";
 
-function App() {
+const App = () => {
 
   return (
       <div className="app">

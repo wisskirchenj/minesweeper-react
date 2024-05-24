@@ -1,41 +1,44 @@
 import "@/components/Cell.css"
 import target from "@/assets/target.svg";
 import fired from "@/assets/fired.svg";
-import React, {useState} from "react";
+import React from "react";
+import {CellModel} from "@/model/fieldModel.ts";
 
-type Status = "hidden" | "revealed" | "flagged";
-
-export interface CellProps {
-  mine: boolean;
+interface CellProps {
+  cellModel: CellModel;
+  clickHandler: (row: number, col: number, rightClick: boolean) => void;
 }
 
-export function Cell({mine}: CellProps) {
+export const Cell = ({cellModel, clickHandler}: Readonly<CellProps>) => {
 
-  const [status, setStatus] = useState<Status>("hidden");
-
-  function dynamicClass() {
-    if (status === "flagged") {
+  const dynamicClass = () => {
+    if (cellModel.flagged) {
       return "flagged";
-    } else if (status === "revealed") {
-      return mine ? "mine" : "empty";
+    } else if (cellModel.revealed) {
+      return cellModel.mine ? "mine" : "empty";
     }
     return "";
   }
 
-  function handleClick() {
-    setStatus("revealed");
+  const handleClick= () => {
+    clickHandler(cellModel.row, cellModel.col, false);
   }
 
-  function handleRightClick(mouseEvent: React.MouseEvent) {
+  const handleRightClick = (mouseEvent: React.MouseEvent) => {
     mouseEvent.preventDefault();
-    setStatus(status === "flagged" ? "hidden" : "flagged");
+    clickHandler(cellModel.row, cellModel.col, true);
   }
-
 
   return (
-      <div className={`cell ${dynamicClass()}`} onClick={handleClick} onContextMenu={handleRightClick}>
-        {status === "revealed" && mine && <img src={fired} className="cell-image" alt="mine"/>}
-        {status === "flagged" && <img src={target} className="cell-image" alt="flagged"/>}
+      <div
+        data-row={cellModel.row}
+        data-col={cellModel.col}
+        className={`cell ${dynamicClass()}`}
+        onClick={handleClick} onContextMenu={handleRightClick}>
+        {cellModel.revealed && (cellModel.mine
+            ? <img src={fired} className="cell-image" alt="mine"/>
+            : <span>{cellModel.neighborMines ? cellModel.neighborMines : ''}</span>)}
+        {cellModel.flagged && <img src={target} className="cell-image" alt="flagged"/>}
       </div>
   )
 }

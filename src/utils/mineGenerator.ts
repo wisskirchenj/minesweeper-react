@@ -1,8 +1,7 @@
-// random generator for 10 mines in the 8 x 9 cell field
-export function generateMines(): number[] {
+export const generateMines = (rows: number, cols: number, mine_count: number): number[] => {
   const mines: number[] = [];
-  while (mines.length < 10) {
-    const mine = Math.floor(Math.random() * 8 * 9);
+  while (mines.length < mine_count) {
+    const mine = Math.floor(Math.random() * rows * cols);
     if (!mines.includes(mine)) {
       mines.push(mine);
     }
