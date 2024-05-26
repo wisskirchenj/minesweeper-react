@@ -2,7 +2,7 @@
 
 .Minesweeper {
   background-color: #282c34;
-  width: 400px;
+  width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;

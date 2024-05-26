@@ -18,9 +18,9 @@ export interface CellModel {
   flagged: boolean;
 }
 
-const ROWS = 9;
-const COLS = 8;
-export const MINE_COUNT = 10;
+export const ROWS = 13;
+export const COLS = 11;
+export const MINE_COUNT = 20;
 
 export const initializeMineField = (): FieldModel => {
   const createField = () => {
