@@ -2,42 +2,70 @@ import '@/components/Minesweeper.css'
 import {ControlPanel} from "@/components/ControlPanel.tsx";
 import {Field} from "@/components/Field.tsx";
 import bomb from '@/assets/bomb.svg'
-import {useState} from "react";
-import {FieldModel, initializeMineField, MINE_COUNT} from "@/model/fieldModel.ts";
+import React, {useState} from "react";
+import {FieldModel, initializeMineField} from "@/model/fieldModel.ts";
 
 export type GameState = 'initial' | 'won' | 'running' | 'lost';
 
-export const Minesweeper = () =>{
-  const [field, setField] = useState<FieldModel>(initializeMineField());
+export const Minesweeper = () => {
+  const [field, setField] = useState<FieldModel>(
+      initializeMineField(13, 11, 20)
+  );
+  const [rows, setRows] = useState("13")
+  const [cols, setCols] = useState("11")
+  const [minesToFlag, setMinesToFlag] = useState(20);
   const [gameState, setGameState] = useState<GameState>('initial')
-  const [minesToFlag, setMinesToFlag] = useState(MINE_COUNT);
 
   const changeGameState = (newState: GameState) => {
     newState === 'initial' && resetGameState()
     setGameState(newState);
   }
 
+  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setRows(newValue);
+  }
+
+  const handleColChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setCols(newValue);
+  }
+
   const changeMinesToFlag = (change: number) => {
     setMinesToFlag(minesToFlag + change);
   }
 
+  const setMines = (value: number) => {
+    setMinesToFlag(value);
+    setField(initializeMineField(Number(rows), Number(cols), value));
+  }
+
   const resetGameState = () => {
-    setField(initializeMineField());
-    setMinesToFlag(MINE_COUNT);
+    setMinesToFlag(field.mine_count);
+    setField(initializeMineField(Number(rows), Number(cols), field.mine_count));
   }
 
   return (
-    <div className="Minesweeper">
-      <header className="Minesweeper-header">
-        <h2>Minesweeper&nbsp;&nbsp;</h2>
-        <img src={bomb} className="Minesweeper-logo" alt="bomb"/>
-      </header>
-      <ControlPanel gameState={gameState} minesToFlag={minesToFlag} changeGameState={changeGameState}/>
-      <Field
-          field={field} setField={setField}
-          gameState={gameState} changeGameState={changeGameState}
-          minesToFlag={minesToFlag} changeFlagged={changeMinesToFlag}
-      />
-    </div>
+      <div className="Minesweeper" style={{width: 50 * field.cols}}>
+        <header className="Minesweeper-header">
+          <h2>Minesweeper&nbsp;&nbsp;</h2>
+          <img src={bomb} className="Minesweeper-logo" alt="bomb"/>
+          <div>
+            &nbsp;&nbsp;
+            <input value={rows} onChange={handleRowChange}></input>
+            &nbsp;x&nbsp;
+            <input value={cols} onChange={handleColChange}></input>
+          </div>
+        </header>
+        <ControlPanel gameState={gameState} minesToFlag={minesToFlag}
+                      changeGameState={changeGameState}
+                      setMines={setMines}
+        />
+        <Field
+            field={field} setField={setField}
+            gameState={gameState} changeGameState={changeGameState}
+            minesToFlag={minesToFlag} changeFlagged={changeMinesToFlag}
+        />
+      </div>
   )
 }

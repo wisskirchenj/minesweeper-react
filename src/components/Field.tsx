@@ -26,7 +26,7 @@ export const Field = (
     const zeroMineNeighborCells = [{row: row, col: col}]
     while (zeroMineNeighborCells.length > 0) {
       const center = zeroMineNeighborCells.pop()!;
-      const unrevealedNeighbors = getNeighborPositions(center.row, center.col).filter(
+      const unrevealedNeighbors = getNeighborPositions(center.row, center.col, field.rows, field.cols).filter(
           pos => !field.cells[pos.row][pos.col].revealed && !field.cells[pos.row][pos.col].flagged);
       zeroMineNeighborCells.push(...unrevealedNeighbors.filter(pos =>
           field.cells[pos.row][pos.col].neighborMines === 0));

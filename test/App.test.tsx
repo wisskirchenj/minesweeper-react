@@ -2,7 +2,6 @@ import App from '@/App';
 import '@testing-library/jest-dom';
 import {render, screen} from './util/test-utils';
 import {fireEvent} from "@testing-library/react";
-import {COLS, ROWS} from "../src/model/fieldModel";
 
 describe('Simple App test', () => {
 
@@ -20,7 +19,7 @@ describe('Simple App test', () => {
   it('rows * cols cells are in with black background-color', () => {
     render(<App/>)
     const cells = document.querySelectorAll('.cell');
-    expect(cells.length).toEqual(ROWS * COLS);
+    expect(cells.length).toEqual(13 * 11);
     const element = cells[0];
     expect(getComputedStyle(element).backgroundColor).toEqual('rgba(0, 0, 0, 0)');
   })

@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import {render} from './util/test-utils';
 import {Cell} from "../src/components/Cell";
 import {vi} from "vitest";
-import {MINE_COUNT} from "../src/model/fieldModel";
 
 vi.mock('@/components/Cell.tsx');
 
@@ -15,6 +14,6 @@ describe('Simple App test with mocked cell', () => {
     render(<App/>)
     const cellsWithMines = [...document.querySelectorAll('.cell').values()].filter(
         cell => cell.textContent === 'true');
-    expect(cellsWithMines.length).toEqual(MINE_COUNT);
+    expect(cellsWithMines.length).toEqual(20);
   })
 })
