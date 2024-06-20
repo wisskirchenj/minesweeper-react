@@ -3,17 +3,17 @@ import {ControlPanel} from "@/components/ControlPanel.tsx";
 import {Field} from "@/components/Field.tsx";
 import bomb from '@/assets/bomb.svg'
 import React, {useState} from "react";
-import {FieldModel, initializeMineField} from "@/model/fieldModel.ts";
+import {FieldModel, initializeMineField, ROWS_DEFAULT, COLS_DEFAULT, MINES_DEFAULT} from "@/model/fieldModel.ts";
 
 export type GameState = 'initial' | 'won' | 'running' | 'lost';
 
 export const Minesweeper = () => {
   const [field, setField] = useState<FieldModel>(
-      initializeMineField(13, 11, 20)
+      initializeMineField(ROWS_DEFAULT, COLS_DEFAULT, MINES_DEFAULT)
   );
-  const [rows, setRows] = useState("13")
-  const [cols, setCols] = useState("11")
-  const [minesToFlag, setMinesToFlag] = useState(20);
+  const [rows, setRows] = useState(ROWS_DEFAULT.toString());
+  const [cols, setCols] = useState(COLS_DEFAULT.toString());
+  const [minesToFlag, setMinesToFlag] = useState(MINES_DEFAULT);
   const [gameState, setGameState] = useState<GameState>('initial')
 
   const changeGameState = (newState: GameState) => {
@@ -52,9 +52,9 @@ export const Minesweeper = () => {
           <img src={bomb} className="Minesweeper-logo" alt="bomb"/>
           <div>
             &nbsp;&nbsp;
-            <input value={rows} onChange={handleRowChange}></input>
+            <input id="rows" value={rows} disabled={gameState === "running"} onChange={handleRowChange}></input>
             &nbsp;x&nbsp;
-            <input value={cols} onChange={handleColChange}></input>
+            <input id="cols" value={cols} disabled={gameState === "running"} onChange={handleColChange}></input>
           </div>
         </header>
         <ControlPanel gameState={gameState} minesToFlag={minesToFlag}

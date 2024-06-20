@@ -1,6 +1,6 @@
 import "@/components/ControlPanel.css"
 import bomb from "@/assets/bomb.svg";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {GameState} from "@/components/Minesweeper.tsx";
 
 interface ControlPanelProps {
@@ -14,6 +14,7 @@ export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}
 
   const [time, setTime] = useState(0);
   const [mineInput, setMineInput] = useState(minesToFlag.toString());
+  const mineInputRef = useRef(mineInput);
 
   useEffect(() => {
     if (gameState === 'running') {
@@ -25,7 +26,7 @@ export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}
   }, [gameState]);
 
   useEffect(() => {
-    if (minesToFlag.toString() !== mineInput) {
+    if (minesToFlag.toString() !== mineInputRef.current) {
       setMineInput(minesToFlag.toString());
     }
   }, [minesToFlag]);
@@ -33,6 +34,7 @@ export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}
   const handleMinesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setMineInput(newValue);
+    mineInputRef.current = newValue;
     !isNaN(parseInt(newValue)) && setMines(parseInt(newValue));
   }
 
@@ -48,7 +50,8 @@ export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}
       <div className="control-panel">
         <div>
           <img src={bomb} className="mini-logo" alt="bomb"/>
-          <input value={mineInput} onChange={handleMinesChange}></input>
+          <input id="mineInput" value={mineInput} disabled={gameState === "running"}
+                 onChange={handleMinesChange}></input>
         </div>
         <button className="reset" onClick={reset}>{stateEmoji}</button>
         <span className="timer">{Math.floor(time / 60)}:{(time % 60).toString().padStart(2, '0')}</span>

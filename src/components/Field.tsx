@@ -40,9 +40,12 @@ export const Field = (
     if (gameState === 'won' || gameState === 'lost') {
       return;
     }
+    // right click toggles flag, if clicked cell is flagged or if there are flags left and cell is not revealed
     if (rightClick && (minesToFlag || field.cells[row][col].flagged) && !field.cells[row][col].revealed) {
       handleRightClick(row, col);
+      // left click reveals cell if not revealed and not flagged
     } else if (!rightClick && !field.cells[row][col].revealed && !field.cells[row][col].flagged) {
+      // first click starts the game
       gameState === 'initial' && changeGameState('running');
       handleLeftClick(row, col);
     }
@@ -50,12 +53,10 @@ export const Field = (
   }
 
   const checkWin = () => {
-    let won = true;
-    field.cells.forEach(row => row.forEach(cell => {
-      if (cell.mine !== cell.flagged || (!cell.revealed && !cell.mine)) {
-        won = false;
-      }
-    }));
+    // win if all cells are revealed or flagged correctly
+    const won = !field.cells.some(
+        row => row.some(cell => cell.mine !== cell.flagged || (!cell.revealed && !cell.mine))
+    );
     won && changeGameState('won');
   }
 
@@ -73,7 +74,7 @@ export const Field = (
   const handleLeftClick = (row: number, col: number) => {
     changeAndSetField((newField: FieldModel) => newField.cells[row][col].revealed = true);
     if (field.cells[row][col].mine) {
-      if (gameState === 'initial') {
+      if (gameState === 'initial') { // if first click is a mine, start over
         changeGameState('initial');
         return;
       }

@@ -21,6 +21,10 @@ export interface CellModel {
   flagged: boolean;
 }
 
+export const ROWS_DEFAULT = 13;
+export const COLS_DEFAULT = 11;
+export const MINES_DEFAULT = 20;
+
 export const initializeMineField = (rows: number, cols: number, mines: number): FieldModel => {
   const createField = () => {
     const field: FieldModel = {
