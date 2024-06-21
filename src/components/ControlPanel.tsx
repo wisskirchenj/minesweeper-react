@@ -7,10 +7,10 @@ interface ControlPanelProps {
   gameState: GameState,
   minesToFlag: number,
   changeGameState: (gameState: GameState) => void,
-  setMines: (value: number) => void
+  setTotalMines: (value: number) => void
 }
 
-export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}: Readonly<ControlPanelProps>) => {
+export const ControlPanel = ({gameState, minesToFlag, changeGameState, setTotalMines}: Readonly<ControlPanelProps>) => {
 
   const [time, setTime] = useState(0);
   const [mineInput, setMineInput] = useState(minesToFlag.toString());
@@ -26,16 +26,19 @@ export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}
   }, [gameState]);
 
   useEffect(() => {
-    if (minesToFlag.toString() !== mineInputRef.current) {
-      setMineInput(minesToFlag.toString());
+    // update mine display if minesToFlag changes
+    const minesCounter = minesToFlag.toString();
+    if (minesCounter !== mineInputRef.current) {
+      setMineInput(minesCounter);
+      mineInputRef.current = minesCounter;
     }
   }, [minesToFlag]);
 
-  const handleMinesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMineInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setMineInput(newValue);
     mineInputRef.current = newValue;
-    !isNaN(parseInt(newValue)) && setMines(parseInt(newValue));
+    !isNaN(parseInt(newValue)) && setTotalMines(parseInt(newValue));
   }
 
   const reset = () => {
@@ -51,7 +54,7 @@ export const ControlPanel = ({gameState, minesToFlag, changeGameState, setMines}
         <div>
           <img src={bomb} className="mini-logo" alt="bomb"/>
           <input id="mineInput" value={mineInput} disabled={gameState === "running"}
-                 onChange={handleMinesChange}></input>
+                 onChange={handleMineInput}></input>
         </div>
         <button className="reset" onClick={reset}>{stateEmoji}</button>
         <span className="timer">{Math.floor(time / 60)}:{(time % 60).toString().padStart(2, '0')}</span>

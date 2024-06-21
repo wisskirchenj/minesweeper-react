@@ -17,7 +17,7 @@ export const Minesweeper = () => {
   const [gameState, setGameState] = useState<GameState>('initial')
 
   const changeGameState = (newState: GameState) => {
-    newState === 'initial' && resetGameState()
+    newState === 'initial' && resetGame()
     setGameState(newState);
   }
 
@@ -35,12 +35,12 @@ export const Minesweeper = () => {
     setMinesToFlag(minesToFlag + change);
   }
 
-  const setMines = (value: number) => {
+  const setTotalMines = (value: number) => {
     setMinesToFlag(value);
     setField(initializeMineField(Number(rows), Number(cols), value));
   }
 
-  const resetGameState = () => {
+  const resetGame = () => {
     setMinesToFlag(field.mine_count);
     setField(initializeMineField(Number(rows), Number(cols), field.mine_count));
   }
@@ -59,7 +59,7 @@ export const Minesweeper = () => {
         </header>
         <ControlPanel gameState={gameState} minesToFlag={minesToFlag}
                       changeGameState={changeGameState}
-                      setMines={setMines}
+                      setTotalMines={setTotalMines}
         />
         <Field
             field={field} setField={setField}
