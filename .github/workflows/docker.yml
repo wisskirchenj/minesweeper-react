@@ -1,0 +1,47 @@
+name: Build and Push Docker Image (AMD)
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 22.x ]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 'latest'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: build
+        run: pnpm run build
+
+      - name: Build docker image
+        run: docker build -t wisskirchenj/minesweeper:latest .
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: wisskirchenj
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push Images to Docker Registry
+        run: docker push wisskirchenj/minesweeper:latest
