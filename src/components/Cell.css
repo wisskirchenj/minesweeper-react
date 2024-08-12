@@ -13,6 +13,7 @@
 
 .empty {
   box-shadow: 0 0 0 4px darkred;
+  background-color: #400040;
 }
 
 .mine {
